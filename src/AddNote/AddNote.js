@@ -2,6 +2,7 @@ import { render } from 'enzyme';
 import React from 'react'
 import ApiContext from '../ApiContext'
 import config from '../config'
+import Dropdown from '../Dropdown/Dropdown';
 import ValidationError from '../ValidationError'
 
 const { Component } = require('react');
@@ -101,6 +102,9 @@ export default class AddNote extends Component {
                         <label htmlFor='content'> Enter your note here</label>
                         <input type='text area' className='creation__control' name='content' id='content' onChange = {e => this.updateContent(e.target.value)}/>
                         {this.state.content.touched && <ValidationError message = {contentError}/>}
+                    </div>
+                    <div className='folderId'>
+                        <Dropdown />
                     </div>
                 </form>
         )

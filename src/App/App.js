@@ -11,6 +11,7 @@ import ApiContext from '../ApiContext';
 import config from '../config';
 
 import './App.css';
+import Dropdown from '../Dropdown/Dropdown';
 
 class App extends Component {
     state = {
@@ -106,6 +107,7 @@ class App extends Component {
                         </h1>
                     </header>
                     <main className="App__main">{this.renderMainRoutes()}</main>
+                    <Dropdown/>
                 </div>
             </ApiContext.Provider>
         );
