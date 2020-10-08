@@ -43,7 +43,9 @@ export default class AddFolder extends Component {
                 return res.json().then(e => Promise.reject(e))
             }
             return res.json()})
-        .then(data => console.log(data))
+        .then(data => {
+            this.context.addFolder(data)
+        })
         .catch(error => {
             console.error({error})
         });
