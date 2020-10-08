@@ -28,15 +28,25 @@ export default class AddFolder extends Component {
 
     handleAddSubmit = e => {
         e.preventDefault()
-        const noteId = this.props.id 
-
-        fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
+        const folderName = this.state.folderName.value;
+        const folder = JSON.stringify({'name': folderName});
+        console.log(folderName);
+        fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: {}
+            body: folder
         })
+        .then(res => {
+            if(!res.ok){
+                return res.json().then(e => Promise.reject(e))
+            }
+            return res.json()})
+        .then(data => console.log(data))
+        .catch(error => {
+            console.error({error})
+        });
 
     }
 
@@ -57,7 +67,10 @@ export default class AddFolder extends Component {
         return(
             //<ApiContext.Consumer>
                 
-                <form className='addFolder'>
+                <form className='addFolder' onSubmit = {e => 
+                    {
+                        console.log('form submitted');
+                        this.handleAddSubmit(e)}}>
                     <h2>Add Folder</h2>
                     <div className='creation__hint'>* required field</div>
                     <div className='folderName'>
@@ -66,7 +79,7 @@ export default class AddFolder extends Component {
                         {this.state.folderName.touched && <ValidationError message={folderNameError}/>}
                     </div>
                     <div className='submit-button'>
-                        <input type='button' className='submit-button' name='submit' value= 'Add Folder' id='submit'/>
+                        <input type='submit' className='submit-button' name='submit' value= 'Add Folder' id='submit'/>
                     </div>
                 </form>
             //</ApiContext.Consumer>
