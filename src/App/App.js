@@ -5,8 +5,10 @@ import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
+
 import ApiContext from '../ApiContext';
 import config from '../config';
+
 import './App.css';
 
 class App extends Component {
@@ -16,6 +18,7 @@ class App extends Component {
     };
 
     componentDidMount() {
+
         Promise.all([
             fetch(`${config.API_ENDPOINT}/notes`),
             fetch(`${config.API_ENDPOINT}/folders`)
