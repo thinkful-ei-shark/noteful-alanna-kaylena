@@ -1,10 +1,11 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
+import config from '../config'
 
 const { Component } = require("react");
-const { default: ApiContext } = require("../ApiContext");
 
-class AddFolder extends Component {
+
+export default class AddFolder extends Component {
     static contextType = ApiContext;
 
     handleAddSubmit = e => {
@@ -12,7 +13,7 @@ class AddFolder extends Component {
         const noteId = this.props.id 
 
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
@@ -23,7 +24,7 @@ class AddFolder extends Component {
 
     render() {
         return(
-            <ApiContext.Consumer>
+            //<ApiContext.Consumer>
                 <form className='addFolder'>
                     <h2>Add Folder</h2>
                     <div className='creation__hint'>* required field</div>
@@ -32,10 +33,10 @@ class AddFolder extends Component {
                         <input type='text' className='creation__control' name='name' id='name'/>
                     </div>
                     <div className='submit-button'>
-                        <input type='button' className='submit-button' name='submit' id='submit'/>
+                        <input type='button' className='submit-button' name='submit' value= 'Add Folder' id='submit'/>
                     </div>
                 </form>
-            </ApiContext.Consumer>
+            //</ApiContext.Consumer>
         )
     }
 }
