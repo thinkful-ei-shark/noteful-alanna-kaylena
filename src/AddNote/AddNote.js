@@ -34,7 +34,7 @@ export default class AddNote extends Component {
     }
     updateFolderId = (folderId) => {
         this.setState({folderId: {value: folderId}})
-        console.log(this.state.folderId.value)
+    
     }
 
     handleAddSubmit = e => {
@@ -44,7 +44,7 @@ export default class AddNote extends Component {
         const folderId = this.state.folderId.value;
        
         const note = JSON.stringify({'name': noteTitle,'content': content, 'folderId': folderId});
-        console.log(note);
+        
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: 'POST',
             headers: {

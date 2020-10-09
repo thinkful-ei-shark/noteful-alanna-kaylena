@@ -117,7 +117,6 @@ class App extends Component {
                         </h1>
                     </header>
                     <main className="App__main">{this.renderMainRoutes()}</main>
-                    <Dropdown/>
                 </div>
             </ApiContext.Provider>
         );
