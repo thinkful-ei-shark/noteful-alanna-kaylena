@@ -16,26 +16,35 @@ export default class AddNote extends Component {
         content: {
             value: '',
             touched: false
+        },
+        folderId: {
+            value: '',
+            
         }
     }
 
     static contextType = ApiContext;
 
-    updateNote = (note) => {
-        this.setState({ note: {value: note, touched: true}
+    updateNoteTitle = (noteTitle) => {
+        this.setState({ noteTitle: {value: noteTitle, touched: true}
     });
 }
     updateContent = (content) => {
         this.setState({ content: {value: content, touched: true}});
+    }
+    updateFolderId = (folderId) => {
+        this.setState({folderId: {value: folderId}})
+        console.log(this.state.folderId.value)
     }
 
     handleAddSubmit = e => {
         e.preventDefault()
         const noteTitle = this.state.noteTitle.value;
         const content = this.state.content.value;
+        const folderId = this.state.folderId.value;
        
-        const note = JSON.stringify({'name': noteTitle}, {'content': content});
-        console.log(noteTitle);
+        const note = JSON.stringify({'name': noteTitle,'content': content, 'folderId': folderId});
+        console.log(note);
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: 'POST',
             headers: {
@@ -80,10 +89,21 @@ export default class AddNote extends Component {
         }
     }
 
+    folderIdValidation = () => {
+        const folderId = this.state.folderId.value;
+
+        if(folderId.value === 'default'){
+            return 'Please choose a folder for your note'
+        }
+
+    }
+
     render() {
         const titleError = this.titleValidation();
 
         const contentError = this.contentValidation();
+
+        const folderIdError = this.folderIdValidation();
 
         return(
             <form className='addNote'
@@ -95,7 +115,7 @@ export default class AddNote extends Component {
                     <div className='creation__hint'>* required field</div>
                     <div className='noteTitle'>
                         <label htmlFor='name'> Name *</label>
-                        <input type='text' className='creation__control' name='name' id='name' onChange = {e => this.updateNote(e.target.value)}/>
+                        <input type='text' className='creation__control' name='name' id='name' onChange = {e => this.updateNoteTitle(e.target.value)}/>
                         {this.state.noteTitle.touched && <ValidationError message = {titleError}/>}
                     </div>
                     <div className='noteContent'>
@@ -104,7 +124,11 @@ export default class AddNote extends Component {
                         {this.state.content.touched && <ValidationError message = {contentError}/>}
                     </div>
                     <div className='folderId'>
-                        <Dropdown />
+                        <Dropdown updateFolderId = {this.updateFolderId} />
+                        <ValidationError message={folderIdError}/>
+                    </div>
+                    <div className="submit-form">
+                        <input type='submit' id='js-submit-note' value='Add Note'/>
                     </div>
                 </form>
         )
