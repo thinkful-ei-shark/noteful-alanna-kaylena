@@ -3,7 +3,7 @@ import React from 'react'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import Dropdown from '../Dropdown/Dropdown';
-import ValidationError from '../ValidationError'
+import ValidationError from '../ValidationError/ValidationError'
 
 const { Component } = require('react');
 
