@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import ApiContext from '../ApiContext'
+import PropTypes from 'prop-types'
 
 
-export default class Dropdown extends React.Component{
+export default class Dropdown extends Component{
     static contextType = ApiContext;
 
     render(){
@@ -26,4 +27,8 @@ export default class Dropdown extends React.Component{
     }
     
 
+}
+
+Dropdown.propTypes = {
+    updateFolderId : PropTypes.func.isRequired,
 }
