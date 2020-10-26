@@ -44,6 +44,18 @@ export default class AddNote extends Component {
         const folderId = this.state.folderId.value;
        
         const note = JSON.stringify({'name': noteTitle,'content': content, 'folderId': folderId});
+
+        if(!noteTitle){
+            return <ValidationError message='Note must have a title'/>
+        }
+
+        if(!folderId){
+            return <ValidationError message='Note must be assigned to a folder'/>
+        }
+
+        if(!content){
+            return <ValidationError message='Note must have some content'/>
+        }
         
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: 'POST',

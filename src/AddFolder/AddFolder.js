@@ -28,6 +28,10 @@ export default class AddFolder extends Component {
     handleAddSubmit = e => {
         e.preventDefault()
         const folderName = this.state.folderName.value;
+        if(!folderName) {
+            return 'Folder must be assigned a name';
+        }
+        
         const folder = JSON.stringify({'name': folderName});
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
