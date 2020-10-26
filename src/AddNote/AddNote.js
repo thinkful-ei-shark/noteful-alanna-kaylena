@@ -1,4 +1,3 @@
-import { render } from 'enzyme';
 import React from 'react'
 import ApiContext from '../ApiContext'
 import config from '../config'
