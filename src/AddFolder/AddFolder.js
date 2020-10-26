@@ -14,6 +14,9 @@ export default class AddFolder extends Component {
                 value: '',
                 touched: false
             },
+
+            hasNameError: false,
+
         }
     }
 
@@ -29,9 +32,10 @@ export default class AddFolder extends Component {
         e.preventDefault()
         const folderName = this.state.folderName.value;
         if(!folderName) {
-            return 'Folder must be assigned a name';
+            this.setState({hasNameError : true});
+            return;
         }
-        
+
         const folder = JSON.stringify({'name': folderName});
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
@@ -67,6 +71,10 @@ export default class AddFolder extends Component {
 
     render() {
         const folderNameError = this.folderValidation();
+        let errorMessage = '';
+        if(this.state.hasNameError){
+            errorMessage = <ValidationError message='Folder must have a name'/>
+        }
 
         return(
             //<ApiContext.Consumer>
@@ -81,6 +89,7 @@ export default class AddFolder extends Component {
                         <label htmlFor='name'>Name *</label>
                         <input type='text' className='creation__control' name='name' id='name' onChange = {e => this.updateName(e.target.value)}/>
                         {this.state.folderName.touched && <ValidationError message={folderNameError}/>}
+                        <ValidationError message={errorMessage}/>
                     </div>
                     <div className='submit-button'>
                         <input type='submit' className='submit-button' name='submit' value= 'Add Folder' id='submit'/>

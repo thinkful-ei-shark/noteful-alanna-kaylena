@@ -20,7 +20,10 @@ export default class AddNote extends Component {
         folderId: {
             value: '',
             
-        }
+        }, 
+        hasTitleError: false,
+        hasContentError: false,
+        hasFolderError: false
     }
 
     static contextType = ApiContext;
@@ -46,15 +49,18 @@ export default class AddNote extends Component {
         const note = JSON.stringify({'name': noteTitle,'content': content, 'folderId': folderId});
 
         if(!noteTitle){
-            return <ValidationError message='Note must have a title'/>
+            this.setState({hasTitleError: true});
+            return;
         }
 
         if(!folderId){
-            return <ValidationError message='Note must be assigned to a folder'/>
+            this.setState({hasFolderError: true});
+            return;
         }
 
         if(!content){
-            return <ValidationError message='Note must have some content'/>
+            this.setState({hasContentError: true});
+            return;
         }
         
         fetch(`${config.API_ENDPOINT}/notes`, {
@@ -117,6 +123,20 @@ export default class AddNote extends Component {
 
         const folderIdError = this.folderIdValidation();
 
+        let errorMessage = '';
+
+        if(this.state.hasTitleError){
+            errorMessage = 'Note must have a title';
+        }
+
+        if(this.state.hasFolderError){
+            errorMessage = 'Note must be assigned to a folder';
+        }
+
+        if(this.state.hasContentError){
+            errorMessage = 'Note must have something in the content';
+        }
+
         return(
             <form className='addNote'
             onSubmit = {e =>
@@ -138,6 +158,9 @@ export default class AddNote extends Component {
                     <div className='folderId'>
                         <Dropdown updateFolderId = {this.updateFolderId} />
                         <ValidationError message={folderIdError}/>
+                    </div>
+                    <div>
+                        <ValidationError message= {errorMessage}/>
                     </div>
                     <div className="submit-form">
                         <input type='submit' id='js-submit-note' value='Add Note'/>
