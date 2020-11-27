@@ -2,8 +2,7 @@ import React from 'react'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import ValidationError from '../ValidationError/ValidationError';
-
-const { Component } = require("react");
+import { Component } from 'react'
 
 
 export default class AddFolder extends Component {
@@ -36,7 +35,7 @@ export default class AddFolder extends Component {
             return;
         }
 
-        const folder = JSON.stringify({'name': folderName});
+        const folder = JSON.stringify({'folder_name': folderName});
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {
@@ -51,6 +50,7 @@ export default class AddFolder extends Component {
             return res.json()})
         .then(data => {
             this.context.addFolder(data)
+            this.props.onAddFolder()
         })
         .catch(error => {
             console.error({error})
@@ -73,16 +73,13 @@ export default class AddFolder extends Component {
         const folderNameError = this.folderValidation();
         let errorMessage = '';
         if(this.state.hasNameError){
-            errorMessage = <ValidationError message='Folder must have a name'/>
+            errorMessage = 'Folder must have a name'
         }
 
         return(
             //<ApiContext.Consumer>
                 
-                <form className='addFolder' onSubmit = {e => 
-                    {
-                        console.log('form submitted');
-                        this.handleAddSubmit(e)}}>
+                <form className='addFolder' onSubmit = {e => this.handleAddSubmit(e)}>
                     <h2>Add Folder</h2>
                     <div className='creation__hint'>* required field</div>
                     <div className='folderName'>

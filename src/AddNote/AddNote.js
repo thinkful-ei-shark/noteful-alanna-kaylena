@@ -3,8 +3,7 @@ import ApiContext from '../ApiContext'
 import config from '../config'
 import Dropdown from '../Dropdown/Dropdown';
 import ValidationError from '../ValidationError/ValidationError'
-
-const { Component } = require('react');
+import { Component } from 'react';
 
 export default class AddNote extends Component {
     state = {
@@ -45,7 +44,7 @@ export default class AddNote extends Component {
         const content = this.state.content.value;
         const folderId = this.state.folderId.value;
        
-        const note = JSON.stringify({'name': noteTitle,'content': content, 'folderId': folderId});
+        const note = JSON.stringify({'note_name': noteTitle,'content': content, 'folderId': folderId});
 
         if(!noteTitle){
             this.setState({hasTitleError: true});
@@ -76,6 +75,7 @@ export default class AddNote extends Component {
             return res.json()})
         .then(data => {
             this.context.addNote(data)
+            this.props.onAddNote()
         })
         .catch(error => {
             console.error({error})
@@ -137,11 +137,7 @@ export default class AddNote extends Component {
         }
 
         return(
-            <form className='addNote'
-            onSubmit = {e =>
-            {
-                console.log('form submitted');
-                this.handleAddSubmit(e)}}>
+            <form className='addNote' onSubmit = {e => this.handleAddSubmit(e)}>
                     <h2>Add Note</h2>
                     <div className='creation__hint'>* required field</div>
                     <div className='noteTitle'>

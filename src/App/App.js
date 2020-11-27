@@ -7,13 +7,15 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
+import EditFolder from '../EditFolder/EditFolder';
+import EditNote from '../EditNote/EditNote';
 import HandleError from '../HandleError';
 
 import ApiContext from '../ApiContext';
 import config from '../config';
 
 import './App.css';
-import Dropdown from '../Dropdown/Dropdown';
+
 
 class App extends Component {
     state = {
@@ -65,6 +67,32 @@ class App extends Component {
         })
     }
 
+    updateNote = updatedNote => {
+        let newNotes = this.state.notes;
+        newNotes = newNotes.map(note => {
+            if(note.id === updatedNote.id){
+                return updatedNote
+            }
+        })
+
+        this.setState({
+            notes: newNotes
+        })
+    }
+
+    updateFolder = updatedFolder => {
+        let newFolders = this.state.folders;
+        newFolders = newFolders.map(folder => {
+            if(folder.id === updatedFolder.id){
+                return updatedFolder
+            }
+        })
+
+        this.setState({
+            folders: newFolders
+        })
+    }
+
     renderNavRoutes() {
         return (
             <>
@@ -77,8 +105,26 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/note/:noteId" component={NotePageNav} />
-                <Route path="/add-folder" component={AddFolder} />
-                <Route path="/add-note" component={AddNote} />
+                <Route path="/edit-folder/:folderId" render={({history}) => 
+                    <EditFolder
+                        onEditFolder = {() => history.goBack()}
+                    />}
+                />
+                <Route path="/add-folder" render={({history}) => 
+                    <AddFolder
+                        onAddFolder = {() => history.goBack()}
+                    />} 
+                />
+                <Route path="/edit-note/:noteId" render={({history}) => 
+                    <EditNote
+                        onEditNote = {() =>  history.goBack()}
+                    />}
+                />
+                <Route path="/add-note" render={({history}) =>
+                    <AddNote
+                        onAddNote = {() => history.goBack()}
+                    />} 
+                />
             </>
         );
     }
@@ -105,7 +151,9 @@ class App extends Component {
             folders: this.state.folders,
             deleteNote: this.handleDeleteNote,
             addFolder: this.handleAddFolder,
-            addNote: this.handleAddNote
+            addNote: this.handleAddNote,
+            updateNote: this.updateNote,
+            updateFolder: this.updateFolder,
         };
         return (
             <ApiContext.Provider value={value}>
