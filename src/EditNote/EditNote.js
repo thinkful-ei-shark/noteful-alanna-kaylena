@@ -45,7 +45,7 @@ export default class EditNote extends Component {
     }
 
     const noteId = this.props.location;
-    fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
+    fetch(`${config.API_ENDPOINT}/api/notes/${noteId}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

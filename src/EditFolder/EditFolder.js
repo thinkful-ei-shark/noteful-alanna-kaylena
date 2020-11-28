@@ -36,7 +36,7 @@ export default class EditFolder extends Component {
         const folderId = this.props.location
 
         const folder = JSON.stringify({'folder_name': folderName});
-        fetch(`${config.API_ENDPOINT}/folders/${folderId}`, {
+        fetch(`${config.API_ENDPOINT}/api/folders/${folderId}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'

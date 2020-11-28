@@ -71,8 +71,9 @@ class App extends Component {
         let newNotes = this.state.notes;
         newNotes = newNotes.map(note => {
             if(note.id === updatedNote.id){
-                return updatedNote
+                note = updatedNote
             }
+            return note
         })
 
         this.setState({
@@ -84,8 +85,9 @@ class App extends Component {
         let newFolders = this.state.folders;
         newFolders = newFolders.map(folder => {
             if(folder.id === updatedFolder.id){
-                return updatedFolder
+                folder = updatedFolder
             }
+            return folder
         })
 
         this.setState({

@@ -44,7 +44,7 @@ export default class AddNote extends Component {
         const content = this.state.content.value;
         const folderId = this.state.folderId.value;
        
-        const note = JSON.stringify({'note_name': noteTitle,'content': content, 'folderId': folderId});
+        const note = JSON.stringify({'note_name': noteTitle,'content': content, 'folder_id': folderId});
 
         if(!noteTitle){
             this.setState({hasTitleError: true});
@@ -61,7 +61,7 @@ export default class AddNote extends Component {
             return;
         }
         
-        fetch(`${config.API_ENDPOINT}/notes`, {
+        fetch(`${config.API_ENDPOINT}/api/notes`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -14,9 +14,9 @@ export default class Dropdown extends Component{
                 <label htmlFor='folders'>Choose a Folder</label>
                 <select id='folder' name='folders' onChange = {e=>this.props.updateFolderId(e.target.value)}>
                     <option key= {0} value='default'>Choose Folder</option>
-                    {folders.map( folder=> {
+                    {folders.map( folder => {
                         return (
-                            <option key = {folder.id} value={folder.id}>{folder.name}</option>
+                            <option key = {folder.id} value={folder.id}>{folder.folder_name}</option>
                         )
                     })
                 }
