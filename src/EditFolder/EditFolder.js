@@ -1,7 +1,7 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
-import config from '..config'
-import ValidationError from '../ValidationError'
+import config from '../config'
+import ValidationError from '../ValidationError/ValidationError'
 import { Component } from 'react';
 
 export default class EditFolder extends Component {

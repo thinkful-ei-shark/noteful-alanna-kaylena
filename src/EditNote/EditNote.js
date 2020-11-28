@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ApiContext from "../ApiContext";
 import config from "../config";
-import ValidationError from "../ValidationError";
+import ValidationError from "../ValidationError/ValidationError";
 
 export default class EditNote extends Component {
   state = {
